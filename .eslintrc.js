@@ -10,6 +10,5 @@ module.exports = {
         devDependencies: true,
       },
     ],
-    'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
 };
