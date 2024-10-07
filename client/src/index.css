@@ -8,7 +8,7 @@
 
 .search {
   height: 3rem;
-  width: 100%;
+  width: 500px;
   background-color: #f8f8f8;
   border-style: none;
   margin-top: 1rem;
@@ -17,7 +17,6 @@
   margin: auto !important;
   margin-right: 1rem !important;
 }
-
 
 .search:focus {
   outline: none;
@@ -32,32 +31,39 @@
 }
 
 .card {
-  width: 100% !important;
-  height: 10rem !important;
+  width: 300px;
+  height: 400px;
   border-radius: 1rem;
   margin-left: 0 !important; 
   margin-bottom: -1.5rem;
 }
 
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  
+}
+
 .body {
-  width: 60rem;
-  margin: auto;
-  height: 100rem;
-  background-color: rgb(0, 0, 0);
-  flex-direction: column !important;
+  padding: 20px;                 
 }
 
 .search-head {
-  padding-top: 2rem !important;
+  margin-top: 3ch;
+  justify-content: center;
+  margin-bottom: 30px
   /* margin: auto; */
   /* background-color: red; */
-  display: flex;
 }
+
+/*
 
 .search-button {
   height: 3rem;
   width: 10rem;
-  background-color: rgb(219, 158, 158) !important;
+  background-color: rgb(219, 158, 158);
   margin-top: 0 !important;
   border-radius: 0.5rem;
   -webkit-transition: background-color 250ms linear;
@@ -69,3 +75,5 @@
   background-color: rgb(196, 101, 101) !important;
   cursor: pointer;
 }
+
+*/

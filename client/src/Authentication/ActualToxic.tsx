@@ -11,9 +11,6 @@ import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import 'client/src/index.css';
 import { keyframes } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
-import { grey } from '@mui/material/colors';
-
 
 const rainbowAnimation = keyframes`
   0% { background-position: 0% 50%; }
@@ -30,7 +27,7 @@ let toxic_bitches =
 
 const names = toxic_bitches.map(person => person.name);
 
-function ToxicPage(props: any): JSX.Element {
+function ActualToxic(props: any): JSX.Element {
   const { name } = props;
   const [search, setSearch] = useState<string>("")
   const handleType = (e: any) => {
@@ -42,11 +39,43 @@ function ToxicPage(props: any): JSX.Element {
 
   return (
     <>
-      <div className="body">
-      <Typography variant="h3" component="div" sx={{fontWeight: 700, color: 'gray'}} display='inline'>
-  
-      <Box display='inline'>Hack4Impact Profiles </Box>
-      <Box display='inline' sx = {{ml: 1}} > 🌎 </Box>
+      <div className="body" style={{ backgroundColor: 'black', minHeight: '100vh' }}>
+
+      <Typography variant="h3" component="div"
+      
+      
+      // sx={{
+      //   background: "linear-gradient(90deg, #ff5f6d, #ffc371, #fffc00, #7bed9f, #00bcd4, #8e44ad)",
+      //   backgroundClip: "text",
+      //   WebkitBackgroundClip: "text",
+      //   color: "transparent",
+      //   WebkitTextFillColor: "transparent",
+      //   fontWeight: "bold"
+      // }}
+
+      >
+      
+      
+      <Box fontWeight='fontWeightMedium' display='inline'
+
+        sx={{
+        background: "linear-gradient(90deg, #ff5f6d, #ffc371,#ffcd36, #7bed9f, #00bcd4, #8e44ad)",
+        backgroundSize: "300%",
+        backgroundClip: "text",
+        WebkitBackgroundClip: "text",
+        color: "transparent",
+        WebkitTextFillColor: "transparent",
+        fontWeight: "bold",
+        animation: `${rainbowAnimation} 20s linear infinite`,
+
+      }}
+      >
+        
+        Hack4Impact Toxic Traits </Box>
+
+        <Box fontWeight='fontWeightMedium' display='inline' sx = {{ml: 0.75}} >
+         🌎 
+      </Box>
        </Typography>
 
       
@@ -58,22 +87,19 @@ function ToxicPage(props: any): JSX.Element {
         
         </div> } */}
 
-        
-
        <Box sx={{ display: 'flex'}}> 
 
         <Typography variant="h5" component="div">
-         <Box sx={{ mt: 2, display: 'flex', fontWeight: 600}}> Change Modes </Box>
+         <Box sx={{ mt: 2, display: 'flex', fontWeight: 600, color: "white"}}> Change Modes </Box>
        </Typography>
 
        <Switch 
+        defaultChecked
           sx={{
             mt: 2,
             ml: 1,
             transform: 'scale(1.5)'
           }} 
-         onChange={() => window.location.href = './toxicreal'}
-         
           />
 
 
@@ -89,7 +115,9 @@ function ToxicPage(props: any): JSX.Element {
               borderRadius: 8,
               mt: 6,
               mx: 3,
-              border: '1.5px solid #ccc',
+              border: '1px solid #ccc',
+              backgroundColor: "black",
+              outlinecolor: "gray",
               transition: 'transform 0.3s ease, box-shadow 0.3s ease', 
               '&:hover': {
                 transform: 'scale(1.05)', 
@@ -114,15 +142,18 @@ function ToxicPage(props: any): JSX.Element {
             </CardContent>
 
             <Typography variant="h5" component="div">
-              <Box fontWeight='fontWeightMedium' sx={{ ml: 1, mt: 1, display: 'flex', justifyContent: 'center'}}> {person.name} </Box>
+              <Box fontWeight='fontWeightMedium' sx={{ ml: 1, mt: 1, display: 'flex', justifyContent: 'center', color: "white" }}> 
+                {person.name} </Box>
               </Typography>
 
               <Typography component="div">
-              <Box sx={{ ml: 1, mt: 1.5, display: 'flex', justifyContent: 'center'}}> {person.location ? person.location : "Location not available"} </Box>
+              <Box sx={{ ml: 1, mt: 1.5, display: 'flex', justifyContent: 'center', color: "white" }}>
+                 {person.location ? person.location : "Location not available"} </Box>
               </Typography>
 
               <Typography component="div">
-              <Box sx={{ ml: 1, display: 'flex', justifyContent: 'center'}}> {person.birthday ? person.birthday : "Birthday not available"} </Box>
+              <Box sx={{ ml: 1, display: 'flex', justifyContent: 'center', color: "white" }}> 
+                {person.birthday ? person.birthday : "Birthday not available"} </Box>
               </Typography>
 
 
@@ -162,4 +193,4 @@ function ToxicPage(props: any): JSX.Element {
 
 // /* prettier-ignore-end */
 
-export default ToxicPage;
+export default ActualToxic;

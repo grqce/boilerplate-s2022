@@ -23,6 +23,8 @@ import ResetPasswordPage from './Authentication/ResetPasswordPage';
 import AlertPopup from './components/AlertPopup';
 import InviteRegisterPage from './Authentication/InviteRegisterPage';
 import ToxicPage from './Authentication/ToxicPage';
+import ActualToxic from './Authentication/ActualToxic';
+import './index.css'
 
 function App() {
   return (
@@ -38,6 +40,7 @@ function App() {
                   <Route element={<UnauthenticatedRoutesWrapper />}>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/toxic" element={<ToxicPage />} />
+                    <Route path="/toxicreal" element={<ActualToxic/>} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route
                       path="/verify-account/:token"
