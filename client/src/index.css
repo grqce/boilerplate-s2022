@@ -43,6 +43,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 20px;
+  opacity: 0;
   
 }
 

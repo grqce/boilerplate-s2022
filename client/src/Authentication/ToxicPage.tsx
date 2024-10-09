@@ -22,10 +22,10 @@ const rainbowAnimation = keyframes`
 `;
 
 let toxic_bitches = 
-  [{name: "AJ 🌙", image: require("../toxicImages/AJ.png")},
+  [{name: "AJ 🌙", image: require("../toxicImages/AJ.png"), location: "📍 New Providence, NJ", birthday: "🎂 August 23, 2006", id: 0},
   {name: "Grace 🪐", image: require("../toxicImages/Grace.jpeg"), location: "📍 Lexington, MA", birthday: "🎂 Sept. 26, 2006"}, 
-  {name: "Edward ☄️", image: "", location: "📍 Hong Kong", birthday: "🎂 May 16, 2006"},
-  {name: "Anjalee 🌟", image: "", location: "📍 Canada", birthday: "🎂 Sept. 16, 200?"},
+  {name: "Edward ☄️", image: require("../toxicImages/Edward.png"),  location: "📍 Hong Kong", birthday: "🎂 May 16, 2006"},
+  {name: "Anjalee 🌟", image: require("../toxicImages/Anjalee.png"), location: "📍 Canada", birthday: "🎂 Sept. 16, 2002"},
   ]
 
 const names = toxic_bitches.map(person => person.name);
@@ -39,6 +39,8 @@ function ToxicPage(props: any): JSX.Element {
   const handleSearch = () => {
     console.log("search button clicked")
   }
+
+  let navigate = useNavigate(); 
 
   return (
     <>
@@ -72,7 +74,7 @@ function ToxicPage(props: any): JSX.Element {
             ml: 1,
             transform: 'scale(1.5)'
           }} 
-         onChange={() => window.location.href = './toxicreal'}
+         onChange={() => navigate("/toxicreal")}
          
           />
 
