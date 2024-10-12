@@ -78,11 +78,10 @@ function ToxicPage(props: any): JSX.Element {
          
           />
 
-
       </Box>
 
         <div className="cards-container">
-        {toxic_bitches.map((person, index) => {
+        {toxic_bitches.map((person) => {
         return (          
           <MUICard className="card" variant="outlined" 
             sx={{

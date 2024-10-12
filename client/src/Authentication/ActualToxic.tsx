@@ -23,19 +23,26 @@ const rainbowAnimation = keyframes`
 function timeout(delay: number) {
   return new Promise( res => setTimeout(res, delay) );
 }
-let graceTraits = ["Uses instagram Webapp", "Does not know how to snap her fingers", "Eats apples even though she’s technically allergic", "Can’t drive (passenger princess)", "Will send game pigeon word hunts to herself to practice (still lost to edward)",  
-"Watched the entire series of the office 10x over"]
-let anjaleeTraits = ["is Canadian"]
 
-let edwardTraits = [""]
+let ajTraits = ["Has ties to the mafia", "Once caused a federal investigation", "Lit high school on fire", "From New Jersey", "Doesn't eat breakfast or lunch", "Deaf but too lazy to wear hearing aid"]
 
-let ajTraits = [""]
+let graceTraits = ["Uses Instagram Webapp", "Does not know how to snap her fingers", "Eats apples even though she’s allergic", "Can’t drive (passenger princess)", "Will send practice word hunts to herself but still lost to Edward", "BeReal & CAVA kids meal's #1 fan"]
+
+let anjaleeTraits = ["is Canadian", "🇨🇦🍁"]
+
+let edwardTraits = ["Mechanical keyboard user",
+  "Played too much monkeytype",
+  "Talks British sometimes",
+  "Sometimes listens to music on Youtube",
+  "Plays GamePigeon basketball with AT&T",
+  "Watched all of Breaking Bad in four days"
+]
 
 let toxic_bitches = 
-  [{name: "AJ 🔞", image: require("../toxicImages/AJReal.JPG"), location: "📍 Rajiv's Basement", birthday: "🎂 August 23, 2006", id: 0, toxictraits: ajTraits},
-  {name: "Grace 🚭", image: require("../toxicImages/GraceREAL.JPG"), location: "📍 Kiwi Yogurt", birthday: "🎂 Sept. 26, 2006", id: 1, toxictraits: graceTraits}, 
-  {name: "Edward 🚾", image: require("../toxicImages/EdwardREAL.png"), location: "📍 McDonal", birthday: "🎂 May 16, 2006", id: 2, toxictraits: edwardTraits},
-  {name: "Anjalee 🍁", image: require("../toxicImages/AnjaleeREAL.jpeg"), location: "📍 Canada", birthday: "🎂 Sept. 16, 2002", id: 3, toxictraits: anjaleeTraits},
+  [{name: "AJ 🔞", name2: "AJ", image: require("../toxicImages/AJReal.JPG"), location: "📍 Rajiv's Basement", birthday: "🎂 August 23, 2006", id: 0, toxictraits: ajTraits},
+  {name: "Grace 🚭", name2: "Grace", image: require("../toxicImages/GraceREAL.JPG"), location: "📍 Kiwi Yogurt", birthday: "🎂 Sept. 26, 2006", id: 1, toxictraits: graceTraits}, 
+  {name: "Edward 🚾", name2: "Edward", image: require("../toxicImages/EdwardREAL.png"), location: "📍 McDonalds", birthday: "🎂 May 16, 2006", id: 2, toxictraits: edwardTraits},
+  {name: "Anjalee 🍁", name2: "Anjalee", image: require("../toxicImages/AnjaleeREAL.jpeg"), location: "📍 Canada", birthday: "🎂 Sept. 16, 2002", id: 3, toxictraits: anjaleeTraits},
   ]
 
 const names = toxic_bitches.map(person => person.name);
@@ -87,6 +94,7 @@ function ActualToxic(props: any): JSX.Element {
               backgroundColor: "black",
               outlinecolor: "gray",
               transition: 'transform 0.3s ease, box-shadow 0.3s ease', 
+              
               '&:hover': {
                 transform: 'scale(1.05)', 
                 cursor: 'pointer',
@@ -135,11 +143,15 @@ function ActualToxic(props: any): JSX.Element {
       )
     }
     else {
+      const activePerson = toxic_bitches[active];
       return (
+        
       <div onClick={()=>{cardSwitchTo(-1)}} style={toxicStyle}>
+        return (
+        <div style={{marginLeft: "1rem"}}>
         <MUICard className="card" variant="outlined" 
             sx={{
-              width: 650,
+              width: 1000,
               height: 420,
               borderRadius: 8,
               mt: 6,
@@ -154,14 +166,43 @@ function ActualToxic(props: any): JSX.Element {
                 boxShadow: '0 6px 20px rgba(0, 0, 0, 0.2)', 
               }
             }}
-            
-          >
-        </MUICard>
-        
-        
-          
+            >
 
+        <Typography variant="h4" component="div" fontWeight= "650" color = "white">
+              <Box sx={{ ml: 1, mt: 2.5, display: 'flex', justifyContent: 'center', color: "#db3c2e" }}>
+              ⚠️ {activePerson.name2}'s Toxic Traits ⚠️ </Box>
+          </Typography>
+            <CardContent>
+              <Box sx={{ color: "white", mt: 2 }}>
+                <div style={{display: "flex", paddingLeft: "30px", flexDirection: "row"}}>
+                  <CardMedia
+                    component="img"
+                    sx={{ height: 245, width: 245, borderRadius: "100%" }}
+                    image={activePerson.image} 
+                  />
+                  <ul style={{ paddingLeft: "50px", margin: 0, color: "white" }}>
+                    {toxic_bitches[active].toxictraits.map((trait, index) => (
+                      <li key={index} style={{ marginBottom: "10px" }}>
+                        <Typography variant="h6">
+                          {trait}
+                        </Typography>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Box>
+            </CardContent>
+        </MUICard>
+        </div>
+
+
+
+        
+        )
+        
+      
       </div>
+         
       );
 
     }
