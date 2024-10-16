@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import ApiError from '../util/apiError';
 import StatusCode from '../util/statusCode';
 import { IToxic } from '../models/toxicuser.model';
+import { Request, Response } from 'express';
 import {
   createPerson,
   getPersonById,
@@ -30,24 +31,20 @@ const getAllUsers = async (
     );
   };
 
-  const addUser = async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-  ) => {
-    return (
-      getAllPersonsFromDB()
-        .then((userList) => {
-          res.status(StatusCode.OK).send(userList);
-        })
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .catch((e) => {
-          next(ApiError.internal('Unable to retrieve all users'));
-        })
-    );
+ const addNewUser = async (req: Request, res: Response) => {
+    try {
+      const { firstName, lastName, nameEmoji, year, hometown, birthday, toxicTraits, photo } = req.body;
+      
+      const newPerson = await createPerson(firstName, lastName, nameEmoji, year, hometown, birthday, toxicTraits, photo);
+  
+      res.status(201).json({ message: 'Person created successfully', person: newPerson });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating person', error });
+    }
   };
+  
   
   export {
     getAllUsers,
-    addUser
+    addNewUser
   };

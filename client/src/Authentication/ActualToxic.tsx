@@ -60,16 +60,16 @@ function ActualToxic(props: any): JSX.Element {
   let navigate = useNavigate(); 
 
 
-  // useEffect(() => {
-  //   fetch('/users/all') 
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setUsers(data); 
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching users:', error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch('/users/all') 
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data); 
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
+      });
+  }, []);
 
   const handleType = (e: any) => {
     setSearch(e.target.value);
