@@ -1,10 +1,10 @@
 /* prettier-ignore-start */
 /* eslint-disable */
 
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import MUICard from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Typography}from '@mui/material';
+import {Typography, TextField}from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,7 +12,9 @@ import Switch from '@mui/material/Switch';
 import 'client/src/index.css';
 import { keyframes } from '@mui/system';
 import { useNavigate } from "react-router-dom";
-  
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const rainbowAnimation = keyframes`
   0% { background-position: 0% 50%; }
@@ -24,11 +26,11 @@ function timeout(delay: number) {
   return new Promise( res => setTimeout(res, delay) );
 }
 
-let ajTraits = ["Has ties to the mafia", "Once caused a federal investigation", "Lit high school on fire", "From New Jersey", "Doesn't eat breakfast or lunch", "Deaf but too lazy to wear hearing aid"]
+let ajTraits = ["Has ties to the mafia", "Once caused a federal investigation", "Lit high school on fire", "From New Jersey", "Doesn't eat breakfast or lunch", "Deaf but too lazy to wear hearing aid", "Diversity hire"]
 
 let graceTraits = ["Uses Instagram Webapp", "Does not know how to snap her fingers", "Eats apples even though she’s allergic", "Can’t drive (passenger princess)", "Will send practice word hunts to herself but still lost to Edward", "BeReal & CAVA kids meal's #1 fan"]
 
-let anjaleeTraits = ["is Canadian", "🇨🇦🍁"]
+let anjaleeTraits = ["is Canadian", "🇨🇦🍁", "Syrup"]
 
 let edwardTraits = ["Mechanical keyboard user",
   "Played too much monkeytype",
@@ -51,13 +53,28 @@ function ActualToxic(props: any): JSX.Element {
   const { name } = props;
   const [search, setSearch] = useState<string>("")
   const [active, setActive] = useState<number>(-1)
+  const [users, setUsers] = useState<any[]>([]);
   const [containerStyle, setContainerStyle] = useState<object>({opacity: 1, transition: "opacity 500ms"})
   const [toxicStyle, setToxicStyle] = useState<object>({opacity: 0, transition: "opacity 500ms"})
   
   let navigate = useNavigate(); 
+
+
+  // useEffect(() => {
+  //   fetch('/users/all') 
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setUsers(data); 
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching users:', error);
+  //     });
+  // }, []);
+
   const handleType = (e: any) => {
     setSearch(e.target.value);
   }
+  
   const handleSearch = () => {
     console.log("search button clicked")
   }
@@ -81,9 +98,11 @@ function ActualToxic(props: any): JSX.Element {
     if (active == -1){
       return (
         <div className="cards-container" style={containerStyle}>
-        {toxic_bitches.map((person, index) => {
-        return (          
-          <MUICard className="card" variant="outlined" 
+        {users.map((person, index) => (
+          <MUICard
+            className="card"
+            variant="outlined"
+            key={index}
             sx={{
               width: 325,
               height: 420,
@@ -91,56 +110,100 @@ function ActualToxic(props: any): JSX.Element {
               mt: 6,
               mx: 3,
               border: '1px solid #ccc',
-              backgroundColor: "black",
-              outlinecolor: "gray",
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease', 
-              
+              backgroundColor: 'black',
+              outlinecolor: 'gray',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
               '&:hover': {
-                transform: 'scale(1.05)', 
+                transform: 'scale(1.05)',
                 cursor: 'pointer',
-                boxShadow: '0 6px 20px rgba(0, 0, 0, 0.2)', 
-              }
+                boxShadow: '0 6px 20px rgba(0, 0, 0, 0.2)',
+              },
             }}
           >
-            <div className="card-style" onClick={()=>{cardSwitchFrom(index)}}>
+            <div className="card-style" onClick={() => cardSwitchFrom(index)}>
               <CardContent>
-                {/* <Typography variant="body2" color="text.secondary">
-                  This is the card content for {person.name}
-                </Typography> */}
-                
-              <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5px'
-                }}>
-                <CardMedia
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5px' }}>
+                  <CardMedia
                     component="img"
-                    sx={{ height: 245, width: 245, borderRadius:"100%" }}
-                    image={person.image}
-                    alt={`Image of ${person.name}`}
+                    sx={{ height: 245, width: 245, borderRadius: '100%' }}
+                    image={person.photo} // Update this field to match your user object
+                    alt={`Image of ${person.firstName} ${person.lastName}`} // Adjust for firstName and lastName
                   />
-              </Box>
+                </Box>
               </CardContent>
             </div>
 
             <Typography variant="h4" component="div">
-              <Box fontWeight='fontWeightMedium' sx={{ ml: 1, mt: 1, display: 'flex', justifyContent: 'center', color: "white" }}> 
-                {person.name} </Box>
-              </Typography>
+              <Box fontWeight="fontWeightMedium" sx={{ ml: 1, mt: 1, display: 'flex', justifyContent: 'center', color: 'white' }}>
+                {`${person.firstName} ${person.lastName}`}
+              </Box>
+            </Typography>
 
-              <Typography component="div">
-              <Box sx={{ ml: 1, mt: 1.5, display: 'flex', justifyContent: 'center', color: "white" }}>
-                {person.location ? person.location : "Location not available"} </Box>
-              </Typography>
-
-              {/* <Typography component="div">
-              <Box sx={{ ml: 1, display: 'flex', justifyContent: 'center', color: "white" }}> 
-                {person.birthday ? person.birthday : "Birthday not available"} </Box>
-              </Typography> */}
-
-
+            <Typography component="div">
+              <Box sx={{ ml: 1, mt: 1.5, display: 'flex', justifyContent: 'center', color: 'white' }}>
+                {person.hometown || 'Location not available'}
+              </Box>
+            </Typography>
           </MUICard>
-        )
-      })}
+        ))}
       </div>
       )
+    }
+    else if (active == -2){
+
+      return (
+        
+        <div>
+          return (
+          <div style={{marginLeft: "1rem"}}>
+          <MUICard className="card" variant="outlined" 
+              sx={{
+                width: 1000,
+                height: 420,
+                borderRadius: 8,
+                mt: 6,
+                mx: 3,
+                border: '1px solid #ccc',
+                backgroundColor: "black",
+                outlinecolor: "gray",
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease', 
+                '&:hover': {
+                  transform: 'scale(1.05)', 
+                  cursor: 'pointer',
+                  boxShadow: '0 6px 20px rgba(0, 0, 0, 0.2)', 
+                }
+              }}
+              >
+
+            <Box
+                  component="form"
+                  sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
+                  noValidate
+                  autoComplete="off"
+                >
+
+              <TextField required id="outlined-basic" label="First Name" variant="outlined" />
+              <TextField required id="outlined-basic" label="Last Name" variant="outlined" />
+              <TextField required id="outlined-basic" label="Hometown" variant="outlined" />
+              <TextField id="outlined-basic" label="Favorite Emoji" variant="outlined" />
+              <TextField id="outlined-basic" label="Favorite Emoji" variant="outlined" />
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker label = "Birthday"/>
+              </LocalizationProvider>
+              
+        </Box>
+          </MUICard>
+          </div>
+          
+          )
+          
+        
+        </div>
+           
+        );
+
+
     }
     else {
       const activePerson = toxic_bitches[active];
@@ -169,7 +232,7 @@ function ActualToxic(props: any): JSX.Element {
             >
 
         <Typography variant="h4" component="div" fontWeight= "650" color = "white">
-              <Box sx={{ ml: 1, mt: 2.5, display: 'flex', justifyContent: 'center', color: "#db3c2e" }}>
+              <Box sx={{ ml: 1, mt: 5, display: 'flex', justifyContent: 'center', color: "#db3c2e" }}>
               ⚠️ {activePerson.name2}'s Toxic Traits ⚠️ </Box>
           </Typography>
             <CardContent>
@@ -224,7 +287,6 @@ function ActualToxic(props: any): JSX.Element {
       //   WebkitTextFillColor: "transparent",
       //   fontWeight: "bold"
       // }}
-
       >
       
       
@@ -259,25 +321,24 @@ function ActualToxic(props: any): JSX.Element {
         
         </div> } */}
 
-       <Box sx={{ display: 'flex'}}> 
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> 
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="h5" component="div">
+                    <Box sx={{ mt: 2, fontWeight: 600, color: "white" }}>Change Modes</Box>
+                </Typography>
 
-        <Typography variant="h5" component="div">
-         <Box sx={{ mt: 2, display: 'flex', fontWeight: 600, color: "white"}}> Change Modes </Box>
-       </Typography>
-
-       <Switch 
-        defaultChecked
-          sx={{
-            mt: 2,
-            ml: 1,
-            transform: 'scale(1.5)'
-          }} 
-         onChange={() => navigate("/toxic")}
-         
-          />
-
+                <Switch 
+                    defaultChecked
+                    sx={{
+                        mt: 2,
+                        ml: 1,
+                        transform: 'scale(1.5)'
+                    }} 
+                    onChange={() => navigate("/toxic")}
+                />
+            </Box>
+            <Button variant="contained" color="primary" size="large" sx = {{mr: 2}} onClick={() => cardSwitchTo(-2)}>Add Person</Button>
         </Box>
-
         {getReturn()}
 
         

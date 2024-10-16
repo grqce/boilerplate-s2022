@@ -44,6 +44,7 @@ async function verifyAccount(verificationToken: string) {
  * @param password
  * @throws An {@link Error} with a `messsage` field describing the issue in verifying
  */
+
 async function register(
   firstName: string,
   lastName: string,
