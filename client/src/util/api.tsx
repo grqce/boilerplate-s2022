@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 // So cookies can be sent automatically with requests
 axios.defaults.withCredentials = true;
@@ -43,7 +43,7 @@ async function resolve(promise: Promise<any>) {
  */
 const BACKENDURL = process.env.PUBLIC_URL
   ? process.env.PUBLIC_URL
-  : 'http://localhost:4000';
+  : "http://localhost:4000";
 
 const URLPREFIX = `${BACKENDURL}/api`;
 

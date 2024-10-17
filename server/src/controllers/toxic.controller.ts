@@ -12,39 +12,37 @@ import {
   deletePersonById
 } from '../services/toxic.service';
 
-
-
 const getAllUsers = async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-  ) => {
-    return (
-      getAllPersonsFromDB()
-        .then((userList) => {
-          res.status(StatusCode.OK).send(userList);
-        })
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .catch((e) => {
-          next(ApiError.internal('Unable to retrieve all users'));
-        })
-    );
-  };
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
+  return (
+    getAllPersonsFromDB()
+      .then((userList) => {
+        res.status(StatusCode.OK).send(userList);
+      })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .catch((e) => {
+        next(ApiError.internal('Unable to retrieve all users'));
+      })
+  );
+};
 
- const addNewUser = async (req: Request, res: Response) => {
-    try {
-      const { firstName, lastName, nameEmoji, year, hometown, birthday, toxicTraits, photo } = req.body;
-      
-      const newPerson = await createPerson(firstName, lastName, nameEmoji, year, hometown, birthday, toxicTraits, photo);
-  
-      res.status(201).json({ message: 'Person created successfully', person: newPerson });
-    } catch (error) {
-      res.status(500).json({ message: 'Error creating person', error });
-    }
-  };
-  
-  
-  export {
-    getAllUsers,
-    addNewUser
-  };
+const addNewUser = async (req: Request, res: Response) => {
+  try {
+    const { name, lastName, nameEmoji, year, hometown, birthday, toxicTraits, photo } = req.body;
+
+    const newPerson = await createPerson(name, lastName, nameEmoji, year, hometown, birthday, toxicTraits);
+    console.log("User created", newPerson);
+    res.status(201).json({ message: 'Person created successfully', person: newPerson });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating person', error });
+  }
+};
+
+
+export {
+  getAllUsers,
+  addNewUser
+};

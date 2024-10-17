@@ -20,7 +20,7 @@ const createPerson = async (
   // major: string,
   birthday: string,
   toxicTraits: [String],
-  photo: string
+  // photo: string
 ) => {
   const newPerson = new Toxic({
     firstName,
@@ -31,7 +31,7 @@ const createPerson = async (
     // major, 
     birthday,
     toxicTraits,
-    photo
+    // photo
 
   });
   const person = await newPerson.save();

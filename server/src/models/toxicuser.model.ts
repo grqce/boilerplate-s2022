@@ -5,13 +5,13 @@
 import mongoose from 'mongoose';
 
 const ToxicSchema = new mongoose.Schema({
-  firstName: {
+  name: {
     type: String,
-    required: true,
+    required: false,
   },
   lastName: {
     type: String,
-    required: true,
+    required: false,
   },
   nameEmoji: {
     type: String,
@@ -19,11 +19,11 @@ const ToxicSchema = new mongoose.Schema({
   },
  year: {
     type: Number,
-    required: true
+    required: false
   },
   hometown: {
     type: String,
-    required: true,
+    required: false,
   },
   toxicTraits: {
     type: [String],
@@ -35,17 +35,17 @@ const ToxicSchema = new mongoose.Schema({
 //   }, 
   birthday: {
     type: String,
-    required: true,
+    required: false,
   },
-  photo: {
-    type: String,
-    required: false
-  }
+  // photo: {
+  //   type: String,
+  //   required: false
+  // }
 });
 
 interface IToxic extends mongoose.Document {
   _id: string;
-  firstName: string;
+  name: string;
   lastName: string;
   nameEmoji: string;
   year: Number;
@@ -53,7 +53,7 @@ interface IToxic extends mongoose.Document {
   // major: string;
   birthday: string;
   toxicTraits: [String];
-  photo: string
+  // photo: string
 }
 
 const Toxic = mongoose.model<IToxic>('Toxic', ToxicSchema);
