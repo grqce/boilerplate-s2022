@@ -5,7 +5,8 @@
 import express from 'express';
 import {
   getAllUsers,
-  addNewUser
+  addNewUser,
+  deleteUser
 } from '../controllers/toxic.controller';
 import 'dotenv/config';
 
@@ -18,5 +19,7 @@ const router = express.Router();
 router.get('/all', getAllUsers);
 
 router.put('/add', addNewUser);
+
+router.delete('/delete', deleteUser)
 
 export default router;

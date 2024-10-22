@@ -24,6 +24,7 @@ import AlertPopup from './components/AlertPopup';
 import InviteRegisterPage from './Authentication/InviteRegisterPage';
 import ToxicPage from './Authentication/ToxicPage';
 import ActualToxic from './Authentication/ActualToxic';
+import ActualToxicCardTest from './Authentication/ActualToxicCardTest';
 import './index.css'
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/toxic" element={<ToxicPage />} />
                     <Route path="/toxicreal" element={<ActualToxic/>} />
+                    <Route path="/toxictest" element={<ActualToxicCardTest/>} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route
                       path="/verify-account/:token"

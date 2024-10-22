@@ -31,9 +31,9 @@ const getAllUsers = async (
 
 const addNewUser = async (req: Request, res: Response) => {
   try {
-    const { name, lastName, nameEmoji, year, hometown, birthday, toxicTraits, photo } = req.body;
+    const {firstName, lastName, nameEmoji, year, hometown, birthday, toxicTraits, photo } = req.body;
 
-    const newPerson = await createPerson(name, lastName, nameEmoji, year, hometown, birthday, toxicTraits);
+    const newPerson = await createPerson(firstName, lastName, nameEmoji, year, hometown, birthday, toxicTraits);
     console.log("User created", newPerson);
     res.status(201).json({ message: 'Person created successfully', person: newPerson });
   } catch (error) {
@@ -41,8 +41,18 @@ const addNewUser = async (req: Request, res: Response) => {
   }
 };
 
+const deleteUser = async (req: Request, res: Response, next: express.NextFunction) => {
+  try {
+    const { id } = req.params; 
+    await deletePersonById(id);
+    res.status(204).send();
+  } catch (error) {
+    next(ApiError.internal('Error deleting user'));
+  }
+};
 
 export {
   getAllUsers,
-  addNewUser
+  addNewUser,
+  deleteUser
 };

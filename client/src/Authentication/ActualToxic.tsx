@@ -15,7 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { postData, putData, useData } from "../util/api";
+import dayjs, { Dayjs } from "dayjs";
+import { postData, putData, useData, deleteData } from "../util/api";
 const rainbowAnimation = keyframes`
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -117,7 +118,7 @@ function ActualToxic(props: any): JSX.Element {
   const [lastName, setLastName] = useState<string>("");
   const [hometown, setHometown] = useState<string>("");
   const [favoriteEmoji, setFavoriteEmoji] = useState<string>("");
-  const [birthday, setBirthday] = useState<string | null>(null);
+  const [birthday, setBirthday] = useState<Dayjs | null>(null);
   const [toxicTraits, setToxicTraits] = useState<string>("");
 
   const handleSubmit = async () => {
@@ -131,20 +132,24 @@ function ActualToxic(props: any): JSX.Element {
     };
 
     try {
-      // Use the postData function to add a new user
-      const response = await putData("toxicreal/add", newUser); // Updated to use postData
+      const response = await putData("toxicreal/add", newUser);
 
       if (response.error) {
         console.error("Failed to add user:", response.error.message);
-        alert(`Failed to add user: ${response.error.message}`); // Provide user feedback
+        alert(`Failed to add user: ${response.error.message}`);
       } else {
         console.log("User added successfully:", response.data);
         alert("User added successfully!");
-        // Reset form fields or navigate as needed...
+        setFirstName("");
+        setLastName("");
+        setHometown("");
+        setFavoriteEmoji("");
+        setBirthday(null);
+        setToxicTraits("");
       }
     } catch (error) {
       console.error("Error adding user:", error);
-      alert("An error occurred while adding the user. Please try again."); // Provide user feedback
+      alert("An error occurred while adding the user. Please try again.");
     }
   };
 
@@ -158,6 +163,16 @@ function ActualToxic(props: any): JSX.Element {
       }
     } catch (error) {
       console.error("Error fetching users:", error);
+    }
+  };
+
+  const deleteUser = async (userId: string) => {
+    try {
+      await deleteData(`users/${userId}`);
+
+      setUsers(users.filter((user) => user.id !== userId));
+    } catch (error) {
+      console.error("Error deleting user:", error);
     }
   };
 
@@ -204,7 +219,7 @@ function ActualToxic(props: any): JSX.Element {
                 mt: 6,
                 mx: 3,
                 border: "1px solid #ccc",
-                backgroundColor: "black",
+                backgroundColor: "white",
                 outlinecolor: "gray",
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 "&:hover": {
@@ -215,6 +230,16 @@ function ActualToxic(props: any): JSX.Element {
               }}
             >
               <div className="card-style" onClick={() => cardSwitchFrom(index)}>
+                {/* <p
+                  style={{
+                    color: "black",
+                    fontSize: "2rem",
+                    marginTop: "0.5rem",
+                    marginLeft: "17.5rem",
+                  }}
+                >
+                  x
+                </p> */}
                 <CardContent>
                   <Box
                     sx={{
@@ -234,7 +259,7 @@ function ActualToxic(props: any): JSX.Element {
                 </CardContent>
               </div>
 
-              <Typography variant="h4" component="div">
+              <Typography variant="h5" component="div">
                 <Box
                   fontWeight="fontWeightMedium"
                   sx={{
@@ -242,7 +267,7 @@ function ActualToxic(props: any): JSX.Element {
                     mt: 1,
                     display: "flex",
                     justifyContent: "center",
-                    color: "white",
+                    color: "black",
                   }}
                 >
                   {`${person.name}`}
@@ -256,7 +281,7 @@ function ActualToxic(props: any): JSX.Element {
                     mt: 1.5,
                     display: "flex",
                     justifyContent: "center",
-                    color: "white",
+                    color: "black",
                   }}
                 >
                   {person.hometown || "Location not available"}
@@ -269,7 +294,6 @@ function ActualToxic(props: any): JSX.Element {
     } else if (active == -2) {
       return (
         <div>
-          return (
           <div style={{ marginLeft: "1rem" }}>
             <MUICard
               className="card"
@@ -304,6 +328,8 @@ function ActualToxic(props: any): JSX.Element {
                 <TextField
                   label="First Name"
                   variant="outlined"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   sx={{
                     backgroundColor: "white",
                     borderRadius: "30px",
@@ -320,6 +346,8 @@ function ActualToxic(props: any): JSX.Element {
                   id="outlined-basic"
                   label="Last Name"
                   variant="outlined"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   sx={{
                     backgroundColor: "white",
                     borderRadius: "30px",
@@ -336,6 +364,8 @@ function ActualToxic(props: any): JSX.Element {
                   id="outlined-basic"
                   label="Hometown"
                   variant="outlined"
+                  value={hometown}
+                  onChange={(e) => setHometown(e.target.value)}
                   sx={{
                     backgroundColor: "white",
                     borderRadius: "30px",
@@ -351,6 +381,8 @@ function ActualToxic(props: any): JSX.Element {
                   id="outlined-basic"
                   label="Favorite Emoji"
                   variant="outlined"
+                  value={favoriteEmoji}
+                  onChange={(e) => setFavoriteEmoji(e.target.value)}
                   sx={{
                     backgroundColor: "white",
                     borderRadius: "30px",
@@ -365,6 +397,10 @@ function ActualToxic(props: any): JSX.Element {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label="Birthday"
+                    value={birthday}
+                    onChange={(newValue) =>
+                      setBirthday(newValue ? dayjs(newValue) : null)
+                    }
                     sx={{
                       backgroundColor: "white",
                       borderRadius: "30px",
@@ -380,6 +416,8 @@ function ActualToxic(props: any): JSX.Element {
                 <TextField
                   id="outlined-basic"
                   label="Toxic Traits (Split By Comma)"
+                  value={toxicTraits}
+                  onChange={(e) => setToxicTraits(e.target.value)}
                   variant="outlined"
                   sx={{
                     backgroundColor: "white",
@@ -411,7 +449,6 @@ function ActualToxic(props: any): JSX.Element {
               </Box>
             </MUICard>
           </div>
-          )
         </div>
       );
     } else if (active == -3) {
@@ -476,7 +513,7 @@ function ActualToxic(props: any): JSX.Element {
                 mt: 6,
                 mx: 3,
                 border: "1px solid #ccc",
-                backgroundColor: "black",
+                backgroundColor: "white",
                 outlinecolor: "gray",
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 "&:hover": {
@@ -490,7 +527,7 @@ function ActualToxic(props: any): JSX.Element {
                 variant="h4"
                 component="div"
                 fontWeight="650"
-                color="white"
+                color="black"
               >
                 <Box
                   sx={{
@@ -519,7 +556,7 @@ function ActualToxic(props: any): JSX.Element {
                       image={activePerson.photo}
                     />
                     <ul
-                      style={{ paddingLeft: "50px", margin: 0, color: "white" }}
+                      style={{ paddingLeft: "50px", margin: 0, color: "black" }}
                     >
                       {toxic_bitches[active].toxictraits.map((trait, index) => (
                         <li key={index} style={{ marginBottom: "10px" }}>
@@ -542,7 +579,13 @@ function ActualToxic(props: any): JSX.Element {
     <>
       <div
         className="body"
-        style={{ backgroundColor: "black", minHeight: "100vh" }}
+        style={{
+          minHeight: "100vh",
+          background: "linear-gradient(120deg, red, #001f3f, #001020, #000000)",
+          backgroundSize: "200% 200%",
+          backgroundPosition: "0% 50%",
+          animation: `${rainbowAnimation} 10s linear infinite`,
+        }}
       >
         <Typography
           variant="h3"
@@ -575,17 +618,17 @@ function ActualToxic(props: any): JSX.Element {
             Hack4Impact Toxic Traits{" "}
           </Box>
 
-          <Box fontWeight="fontWeightMedium" display="inline" sx={{ ml: 0.75 }}>
-            😛
-          </Box>
+          <Box
+            fontWeight="fontWeightMedium"
+            display="inline"
+            sx={{ ml: 0.75 }}
+          ></Box>
         </Typography>
-
         {/* { <div className="search-head">
           <input className="search" type="text" placeholder="" value={search} onChange={(e) => handleType(e)} ></input>
           <Button variant="contained" onClick={handleSearch}>Search </Button>
         
         </div> } */}
-
         <Box
           sx={{
             display: "flex",
@@ -608,18 +651,22 @@ function ActualToxic(props: any): JSX.Element {
               }}
               onChange={() => navigate("/toxic")}
             />
-
-         
           </Box>
         </Box>
-
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          sx={{ mr: 2 }}
+          onClick={() => cardSwitchTo(-2)}
+        >
+          Add Person
+        </Button>
         {getReturn()}
-        
       </div>
     </>
   );
 }
-
 // <Box
 
 // sx={{
@@ -630,7 +677,7 @@ function ActualToxic(props: any): JSX.Element {
 // >
 // <div className="head">
 //   <input className="search" type="text" placeholder="" value={search} onChange={(e) => handleType(e)} ></input>
-//   <Button
+// <Button
 //     variant="contained"
 //     onClick={handleSearch}
 //   >

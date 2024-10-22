@@ -5,7 +5,7 @@
 import mongoose from 'mongoose';
 
 const ToxicSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
     required: false,
   },
