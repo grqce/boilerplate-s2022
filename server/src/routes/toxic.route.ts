@@ -20,6 +20,6 @@ router.get('/all', getAllUsers);
 
 router.put('/add', addNewUser);
 
-router.delete('/delete', deleteUser)
+router.delete('/delete/:id', deleteUser)
 
 export default router;

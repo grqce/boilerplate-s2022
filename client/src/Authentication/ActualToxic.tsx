@@ -16,7 +16,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
-import { postData, putData, useData, deleteData } from "../util/api";
+import { postData, putData, useData, deleteData, getData } from "../util/api";
 const rainbowAnimation = keyframes`
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -155,7 +155,7 @@ function ActualToxic(props: any): JSX.Element {
 
   const fetchUsers = async () => {
     try {
-      const response = await useData("/users/all");
+      const response = await getData("toxicreal/all");
       if (response == null) {
         console.error("Dhruv");
       } else {
@@ -304,15 +304,6 @@ function ActualToxic(props: any): JSX.Element {
                 borderRadius: 8,
                 mt: 6,
                 mx: 3,
-                //   border: '1px solid #ccc',
-                //   backgroundColor: "black",
-                //   outlinecolor: "gray",
-                //   transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                // '&:hover': {
-                //   transform: 'scale(1.05)',
-                //   cursor: 'pointer',
-                //   boxShadow: '0 6px 20px rgba(0, 0, 0, 0.2)',
-                // }
               }}
             >
               <Box
@@ -565,6 +556,7 @@ function ActualToxic(props: any): JSX.Element {
                       ))}
                     </ul>
                   </div>
+                  
                 </Box>
               </CardContent>
             </MUICard>
@@ -581,7 +573,8 @@ function ActualToxic(props: any): JSX.Element {
         className="body"
         style={{
           minHeight: "100vh",
-          background: "linear-gradient(120deg, red, #001f3f, #001020, #000000)",
+          background:
+            "linear-gradient(120deg, black, #0A1644 , #2C47B5, #5B7BDE, white)",
           backgroundSize: "200% 200%",
           backgroundPosition: "0% 50%",
           animation: `${rainbowAnimation} 10s linear infinite`,
@@ -613,6 +606,7 @@ function ActualToxic(props: any): JSX.Element {
               WebkitTextFillColor: "transparent",
               fontWeight: "bold",
               animation: `${rainbowAnimation} 10s linear infinite`,
+              fontSize: "4rem",
             }}
           >
             Hack4Impact Toxic Traits{" "}
@@ -657,7 +651,7 @@ function ActualToxic(props: any): JSX.Element {
           variant="contained"
           color="primary"
           size="large"
-          sx={{ mr: 2 }}
+          sx={{ mr: 2, mt: 3 }}
           onClick={() => cardSwitchTo(-2)}
         >
           Add Person

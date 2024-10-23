@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useData, deleteData, putData } from "../util/api";
+import { useData, getData, deleteData, putData } from "../util/api";
 import dayjs, { Dayjs } from "dayjs";
 
 // Define a dark theme with light fonts
@@ -46,9 +46,10 @@ function ActualToxicCardTest(): JSX.Element {
 
   const fetchUsers = async () => {
     try {
-      const response = await useData("/toxicreal/all");
+      const response = await getData("toxicreal/all");
       if (response?.data) {
         setUsers(response.data);
+        console.log(response.data)
       } else {
         console.error("Failed to fetch users: No data in response");
       }
@@ -85,7 +86,7 @@ function ActualToxicCardTest(): JSX.Element {
 
   const deleteUser = async (userId: string) => {
     try {
-      await deleteData(`users/${userId}`);
+      await deleteData(`delete/${userId}`);
       setUsers(users.filter((user) => user.id !== userId));
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -106,7 +107,7 @@ function ActualToxicCardTest(): JSX.Element {
   }, []);
 
   return (
-    <ThemeProvider theme={darkTheme}>
+   
       <div style={{ minHeight: "100vh", padding: "2rem" }}>
         <Typography variant="h3" sx={{ textAlign: "center", marginBottom: 4 }}>
           Hack4Impact Toxic Traits
@@ -181,7 +182,7 @@ function ActualToxicCardTest(): JSX.Element {
           {users.length > 0 ? (
             users.map((user) => (
               <MUICard
-                key={user.id}
+                key={user._id}
                 variant="outlined"
                 sx={{
                   width: 300,
@@ -212,7 +213,7 @@ function ActualToxicCardTest(): JSX.Element {
                     variant="contained"
                     color="error"
                     sx={{ mt: 2 }}
-                    onClick={() => deleteUser(user.id)}
+                    onClick={() => deleteUser(user._id)}
                   >
                     Delete
                   </Button>
@@ -226,7 +227,7 @@ function ActualToxicCardTest(): JSX.Element {
           )}
         </Box>
       </div>
-    </ThemeProvider>
+    
   );
 }
 

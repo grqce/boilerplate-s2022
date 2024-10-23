@@ -44,7 +44,7 @@ const ToxicSchema = new mongoose.Schema({
 });
 
 interface IToxic extends mongoose.Document {
-  _id: string;
+  id: string;
   name: string;
   lastName: string;
   nameEmoji: string;
