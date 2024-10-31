@@ -142,57 +142,86 @@ function ActualToxicFinal(): JSX.Element {
         <div onClick={() => setId(user._id)}>
           <CardMedia
             component="img"
-            height="200"
+            height="250"
             image={getImage(user.firstName)}
             alt={`${user.firstName} ${user.lastName}`}
+            sx={{ borderRadius: "24px" }}
           />
           <Typography
             variant="h5"
-            sx={{ textAlign: "center", mt: 2 }}
+            sx={{ textAlign: "center", mt: 2, fontWeight: "bold" }}
             color="white"
           >
-            {user.firstName} {user.lastName}
+            {user.firstName} {user.lastName} {user.favoriteEmoji}
           </Typography>
+
           <Typography sx={{ textAlign: "center", color: "#D3D3D3" }}>
-            {user.hometown || "Hometown not provided"}
+            🎂 Birthday: {user.birthday || "not provided"}
+          </Typography>
+
+          <Typography sx={{ textAlign: "center", color: "#D3D3D3" }}>
+            🏠 Hometown: {user.hometown || "not provided"}
           </Typography>
           <Button
             variant="contained"
             color="error"
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+              borderRadius: 100,
+              width: 50, // Increased the width for better visibility
+              mx: "auto", // Centers the button horizontally
+              display: "block",
+              // color: "black", // Required for `mx: auto` to work
+            }}
             onClick={() => deleteUser(user._id)}
-            style={{ backgroundColor: "#0077b6" }}
+            style={{ backgroundColor: "#8f578f" }} // Darker shade of blue #8a3e83
           >
-            Delete
+            x
           </Button>
         </div>
       );
     }
     return (
       <div>
-        <Typography
-          variant="h5"
-          sx={{ textAlign: "center", mt: 2 }}
-          color="white"
-        >
-          {user.firstName}'s Toxic Traits
-          {user.toxicTraits.map((trait: any) => {
-            return (
-              <p
-                style={{
-                  textAlign: "left",
-                  fontSize: "1rem",
-                  marginLeft: "0.5rem",
-                  marginRight: "0.5rem",
-                  marginTop: "1rem",
-                  marginBottom: "-0.5rem",
-                }}
-              >
-                - {trait}
-              </p>
-            );
-          })}
-        </Typography>
+        <div>
+          <Typography>
+            <Box
+              fontWeight="fontWeightMedium"
+              display="inline"
+              sx={{
+                background: "linear-gradient(120deg, #a6c0fe 0%, #f68084 100%)",
+                backgroundSize: "300%",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+                WebkitTextFillColor: "transparent",
+                fontWeight: "bold",
+                marginLeft: "1rem",
+                animation: `${rainbowAnimation} 10s linear infinite`,
+                fontSize: "1.5rem",
+              }}
+            >
+              {user.firstName}'s Toxic Traits
+            </Box>
+          </Typography>
+
+          {user.toxicTraits.map((trait: any, index: number) => (
+            <Typography
+              key={index}
+              sx={{
+                textAlign: "left",
+                fontSize: "1rem",
+                marginLeft: "0.5rem",
+                marginRight: "0.5rem",
+                mt: "1rem",
+                mb: "-0.5rem",
+              }}
+              color="white"
+            >
+              ◦ {trait}
+            </Typography>
+          ))}
+        </div>
       </div>
     );
   };
@@ -205,8 +234,7 @@ function ActualToxicFinal(): JSX.Element {
             fontWeight="fontWeightMedium"
             display="inline"
             sx={{
-              background:
-                "linear-gradient(90deg, rgb(56, 24, 40) -10.7%, rgb(23, 148, 185) 100.2%)",
+              background: "linear-gradient(135deg, #4b6cb7 0%, #c94b4b 100%)",
               backgroundSize: "300%",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
@@ -232,6 +260,7 @@ function ActualToxicFinal(): JSX.Element {
               height: 300,
               borderRadius: 8,
               mt: 2,
+              mb: 2,
               mx: 3,
             }}
           >
@@ -262,7 +291,6 @@ function ActualToxicFinal(): JSX.Element {
               />
 
               <TextField
-                required
                 id="outlined-basic"
                 label="Last Name"
                 variant="outlined"
@@ -280,7 +308,6 @@ function ActualToxicFinal(): JSX.Element {
               />
 
               <TextField
-                required
                 id="outlined-basic"
                 label="Hometown"
                 variant="outlined"
@@ -299,7 +326,7 @@ function ActualToxicFinal(): JSX.Element {
 
               <TextField
                 id="outlined-basic"
-                label="Favorite Emoji"
+                label="Social Security Number"
                 variant="outlined"
                 value={favoriteEmoji}
                 onChange={(e) => setFavoriteEmoji(e.target.value)}
@@ -380,11 +407,11 @@ function ActualToxicFinal(): JSX.Element {
                   key={user._id}
                   variant="outlined"
                   sx={{
-                    width: 300,
-                    height: 370,
+                    width: 350,
+                    height: 450,
                     margin: 2,
-                    backgroundColor: "#1e1e1e",
-                    borderRadius: 2,
+                    backgroundColor: "#383838",
+                    borderRadius: 9,
                     "&:hover": {
                       transform: "scale(1.05)",
                       boxShadow: "0 6px 10px rgba(0, 0, 0, 0.2)",

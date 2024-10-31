@@ -31,8 +31,8 @@
 }
 
 .card {
-  width: 300px;
-  height: 400px;
+  width: 350px;
+  height: 450px;
   border-radius: 1rem;
   margin-left: 0 !important; 
   margin-bottom: -1.5rem;
@@ -79,6 +79,34 @@
 
 */
 
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
 .bg {
   background: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+  background-size: 200% 200%;
+  animation: gradientAnimation 4s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

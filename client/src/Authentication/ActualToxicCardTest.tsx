@@ -206,6 +206,9 @@ function ActualToxicCardTest(): JSX.Element {
                   <Typography variant="h5" sx={{ textAlign: "center", mt: 2 }}>
                     {user.firstName} {user.lastName}
                   </Typography>
+                  <Typography sx={{ textAlign: "center", color: "#D3D3D3" }}>
+                  {user.birthday || "Birthday not provided"}
+                  </Typography>
                   <Typography sx={{ textAlign: "center", color: "gray" }}>
                     {user.hometown || "Hometown not provided"}
                   </Typography>

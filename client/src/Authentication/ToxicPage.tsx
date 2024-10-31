@@ -141,7 +141,7 @@ function ToxicPage(): JSX.Element {
               ml: 1,
               transform: "scale(1.5)",
             }}
-            onChange={() => navigate("/toxicreal")}
+            onChange={() => navigate("/toxicfinal")}
           />
         </Box>
 
